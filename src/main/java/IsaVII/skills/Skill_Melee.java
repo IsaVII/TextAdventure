@@ -12,6 +12,13 @@ public class Skill_Melee extends Skills_Base {
         this.hitCount = hitCount;
     }
     
+    @Override
+    public void printSkill(boolean fightMode, int nr) {
+        if (fightMode) {
+            IO.println(String.format("\t"+nr+".\t%-20s %-15d %-15d", name, damage, cooldown));
+        }
+    }
+    
     public int getDamage() {
         return damage;
     }

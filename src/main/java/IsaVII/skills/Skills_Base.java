@@ -1,13 +1,13 @@
 package IsaVII.skills;
 
-public class Skills_Base {
+public abstract class Skills_Base {
     
-    private final int id;
-    private final SkillType skillType;
-    private final String name;
-    private final String description;
+    protected final int id;
+    protected final SkillType skillType;
+    protected final String name;
+    protected final String description;
     
-    private final int cooldown;
+    protected final int cooldown;
     
     public Skills_Base(int id, SkillType skillType, String name, String description, int cooldown) {
         this.id = id;
@@ -15,6 +15,10 @@ public class Skills_Base {
         this.name = name;
         this.description = description;
         this.cooldown = cooldown;  
+    }
+
+
+    public void printSkill(boolean fightMode, int nr) {
     }
 
     public int getId() {
@@ -36,4 +40,6 @@ public class Skills_Base {
     public int getCooldown() {
         return cooldown;
     }
+
+ 
 }
