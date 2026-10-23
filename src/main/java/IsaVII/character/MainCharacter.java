@@ -34,4 +34,8 @@ public class MainCharacter {
     public int getCoins() {
         return coins;
     }
+
+    public void roundEnded() {
+         skills.roundEnded();
+    }
 }

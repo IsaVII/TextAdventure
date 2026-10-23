@@ -23,12 +23,22 @@ public class Skills {
         
         int counter = 1;
         for (Skill skill :  skills) {
-            skill.printSkill(true, counter++);
+            skill.getSkill().printSkill(true, skill.getCurrentCooldown(), counter++);
         }
         
     }
 
     public Skill getSkillByIndex(int i) {
         return skills.get(i);
+    }
+
+    public void roundEnded() {
+        for (Skill skill : skills) {
+            skill.roundEnded();
+        }
+    }
+
+    public int getSkillCount() {
+        return skills.size();
     }
 }

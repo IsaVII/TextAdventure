@@ -24,11 +24,16 @@ public class Skill {
         this.currentCooldown = currentCooldown;
     }
 
-    public void printSkill(boolean fightMode, int counter) {
-        skill.printSkill(fightMode, counter);
-    }
 
     public void startCooldown() {
         this.currentCooldown = skill.getCooldown();
+    }
+
+    public void roundEnded() {
+        
+    }
+
+    public boolean isOnCooldown() {
+        return  currentCooldown > 0;
     }
 }

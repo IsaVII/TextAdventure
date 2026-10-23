@@ -18,7 +18,7 @@ public abstract class Skills_Base  implements Skill_Interface {
     }
 
 
-    public void printSkill(boolean fightMode, int nr) {
+    public void printSkill(boolean fightMode, int currentCooldown, int nr) {
     }
 
     public int getId() {

@@ -13,9 +13,10 @@ public class Skill_Melee extends Skills_Base {
     }
     
     @Override
-    public void printSkill(boolean fightMode, int nr) {
+    public void printSkill(boolean fightMode, int currentCooldown, int nr)  {
         if (fightMode) {
-            IO.println(String.format("\t"+nr+".\t%-20s %-15d %-15d", name, damage, cooldown));
+            //if cooldown is not 0 -> italic font 
+            IO.println(String.format( currentCooldown > 0 ? "\033[3m\t\t%-20s %-15d %-15d\033[0m" : "\t"+nr+".\t%-20s %-15d %-15d", name, damage, currentCooldown));
         }
     }
     

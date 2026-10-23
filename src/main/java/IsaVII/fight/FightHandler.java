@@ -22,14 +22,20 @@ public class FightHandler {
         IO.println("Fight started!");
         
         //Todo:: show enemy 
+         handleFightMenu(mainCharacter);
         
+    
+    }
+    
+    private static void handleFightMenu(MainCharacter mainCharacter){
+
         printFightMenu();
         int choice = UserInputHelpers.getMenuNumberFromUserInRange("What do you want to do?", 1, 3);
-        
+
         switch (choice) {
             case 1:
                 chooseSkill(mainCharacter);
-                startFight(mainCharacter);
+                handleFightMenu(mainCharacter);
                 break;
             case 2:
                 //Todo:: handle items
@@ -38,13 +44,15 @@ public class FightHandler {
                 //Todo:: handle flee
                 break;
         }
+
+        mainCharacter.roundEnded();
     }
 
     private static void printFightMenu() {
         IO.println("Fight Menu:");
-        IO.println("1. Attack");
-        IO.println("2. Use Item");
-        IO.println("3. Flee");
+        IO.println("\t1. Attack");
+        IO.println("\t2. Use Item");
+        IO.println("\t3. Flee");
     }
 
     public static void chooseSkill(MainCharacter mainCharacter) {
@@ -52,11 +60,24 @@ public class FightHandler {
         IO.println("You chose to attack!");
 
         Skills skills = mainCharacter.getSkills();
+        
+        //print skill list and get user input for skill choice
         skills.printSkillList();
-        int choice = UserInputHelpers.getMenuNumberFromUserInRange("Which skill do you want to use?", 1, 3);
+        int skillCount = skills.getSkillCount();
 
-        Skill selectedSkill = skills.getSkillByIndex(choice - 1);
-        handleSkillUsage(selectedSkill);
+        while (true) {
+            int choice = UserInputHelpers.getMenuNumberFromUserInRange("Which skill do you want to use?", 1, skillCount);
+            Skill selectedSkill = skills.getSkillByIndex(choice - 1);
+
+            if (selectedSkill.isOnCooldown()) {
+                IO.println("This skill is on cooldown for " + selectedSkill.getCurrentCooldown() + " more rounds.\n");
+            }
+            else {
+                handleSkillUsage(selectedSkill);
+                return;
+            }
+
+        }
         
     }
     
@@ -71,6 +92,10 @@ public class FightHandler {
         else {
             IO.println("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage!");
         }
+        
+        UiHelpers.printLine();
+        IO.println();
+        
         skill.startCooldown();
     }
 }
