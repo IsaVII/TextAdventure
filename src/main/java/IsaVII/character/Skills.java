@@ -3,7 +3,6 @@ package IsaVII.character;
 import IsaVII.skills.Skills_Base;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Skills {
     
@@ -18,12 +17,18 @@ public class Skills {
         skills.removeIf(skill -> skill.getSkill().getId() == id);
     }
 
-
     public void printSkillList() {
+        IO.println("Skills:");
+        IO.println(String.format("\t\t%-17s %-14s %-17s", "Skill", "Damage", "Cooldown"));
         
         int counter = 1;
         for (Skill skill :  skills) {
             skill.printSkill(true, counter++);
         }
+        
+    }
+
+    public Skill getSkillByIndex(int i) {
+        return skills.get(i);
     }
 }

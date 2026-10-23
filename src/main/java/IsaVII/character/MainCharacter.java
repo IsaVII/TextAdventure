@@ -20,13 +20,18 @@ public class MainCharacter {
         skills.addSkill(SkillManager.getSkillById(1));
         skills.addSkill(SkillManager.getSkillById(4));
     }
-    
 
-    public void printTurnData(){
-        
-        IO.println("Skills:");
-        IO.println(String.format("\t\t%-17s %-14s %-17s", "Skill", "Damage", "Cooldown"));
-        skills.printSkillList();
+  
+
+    public String getName() {
+        return name;
     }
-    
+
+    public Skills getSkills() {
+        return skills;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
 }

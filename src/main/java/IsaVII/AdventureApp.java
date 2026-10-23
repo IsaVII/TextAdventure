@@ -1,7 +1,9 @@
 package IsaVII;
 
 import IsaVII.character.MainCharacter;
+import IsaVII.fight.FightHandler;
 import IsaVII.skills.SkillManager;
+import IsaVII.ui.UserInputHelpers;
 
 public class AdventureApp {
     static void main() {
@@ -9,7 +11,7 @@ public class AdventureApp {
         SkillManager skillManager = new SkillManager();
 
         MainCharacter mainCharacter = new MainCharacter("Xemnas");
-        mainCharacter.printTurnData();
+        FightHandler.startFight(mainCharacter);
         
         
         
