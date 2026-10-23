@@ -27,4 +27,8 @@ public class Skill {
     public void printSkill(boolean fightMode, int counter) {
         skill.printSkill(fightMode, counter);
     }
+
+    public void startCooldown() {
+        this.currentCooldown = skill.getCooldown();
+    }
 }

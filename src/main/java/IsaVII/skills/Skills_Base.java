@@ -1,6 +1,6 @@
 package IsaVII.skills;
 
-public abstract class Skills_Base {
+public abstract class Skills_Base  implements Skill_Interface {
     
     protected final int id;
     protected final SkillType skillType;
@@ -37,6 +37,7 @@ public abstract class Skills_Base {
         return description;
     }
 
+    @Override
     public int getCooldown() {
         return cooldown;
     }

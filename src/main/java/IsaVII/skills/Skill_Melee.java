@@ -3,13 +3,13 @@ package IsaVII.skills;
 public class Skill_Melee extends Skills_Base {
     
     private final int damage;
-    private final int hitCount; // Default hit count for melee attacks
+    private final int targetCount; // Default hit count for melee attacks
     
     
-    public Skill_Melee(int id, String name, String description, int damage, int cooldown, int hitCount) {
+    public Skill_Melee(int id, String name, String description, int damage, int cooldown, int targetCount) {
         super(id, SkillType.MELEE_ATTACK, name, description, cooldown);
         this.damage = damage;
-        this.hitCount = hitCount;
+        this.targetCount = targetCount;
     }
     
     @Override
@@ -19,11 +19,13 @@ public class Skill_Melee extends Skills_Base {
         }
     }
     
+    @Override
     public int getDamage() {
         return damage;
     }
-    
-    public int getHitCount() {
-        return hitCount;
+
+    @Override
+    public int getTargetCount() {
+        return targetCount;
     }
 }
