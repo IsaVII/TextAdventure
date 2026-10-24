@@ -2,10 +2,11 @@ package IsaVII.character;
 
 
 import IsaVII.skills.SkillManager;
+import IsaVII.skills.SkillName;
 
 public class MainCharacter {
     
-    private String name; 
+    private final String name; 
     private Skills skills;
     
     private int coins = 0;
@@ -17,8 +18,8 @@ public class MainCharacter {
     
     private void InitSkills(){
         skills = new Skills();
-        skills.addSkill(SkillManager.getSkillById(1));
-        skills.addSkill(SkillManager.getSkillById(4));
+        skills.addSkill(SkillManager.getSkill(SkillName.SLASH));
+        skills.addSkill(SkillManager.getSkill(SkillName.CLEAVE));
     }
 
   

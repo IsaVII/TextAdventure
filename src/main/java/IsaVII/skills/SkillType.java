@@ -5,3 +5,4 @@ public enum SkillType {
     MELEE_ATTACK,
     BUFF
 }
+
