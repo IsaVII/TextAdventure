@@ -7,7 +7,7 @@ public abstract class Skills_Base  implements Skill_Interface {
     protected final String name;
     protected final String description;
     
-    protected final int cooldown;
+    protected final int cooldown; //the number is the round when the player can use the skill again (3 -> 2 rounds no usage)
     
     public Skills_Base(int id, SkillType skillType, String name, String description, int cooldown) {
         this.id = id;

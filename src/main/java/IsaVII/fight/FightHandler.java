@@ -5,13 +5,24 @@ import IsaVII.character.Skill;
 import IsaVII.character.Skills;
 import IsaVII.skills.SkillManager;
 import IsaVII.skills.Skills_Base;
-import IsaVII.ui.UiHelpers;
-import IsaVII.ui.UserInputHelpers;
+    import IsaVII.ui.UiHelpers;
+    import IsaVII.ui.UserInputHelpers;
 
 public class FightHandler {
     
     //for testing here, will be removed later
     void main(){
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.BOLD));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.CYAN));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.YELLOW));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.GREEN));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.BLUE));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.MAGENTA));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.RED));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.GREY));
+        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.TEST));
+        
+        
         SkillManager skillManager = new SkillManager();
         MainCharacter mainCharacter = new MainCharacter("Xemnas");
         startFight(mainCharacter);
@@ -35,17 +46,19 @@ public class FightHandler {
         switch (choice) {
             case 1:
                 chooseSkill(mainCharacter);
-                handleFightMenu(mainCharacter);
+         
                 break;
             case 2:
                 //Todo:: handle items
                 break;
             case 3:
                 //Todo:: handle flee
-                break;
+                
+                return;
         }
 
         mainCharacter.roundEnded();
+        handleFightMenu(mainCharacter);
     }
 
     private static void printFightMenu() {

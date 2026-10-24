@@ -30,7 +30,9 @@ public class Skill {
     }
 
     public void roundEnded() {
-        
+        if (currentCooldown > 0) {
+            currentCooldown--;
+        }
     }
 
     public boolean isOnCooldown() {

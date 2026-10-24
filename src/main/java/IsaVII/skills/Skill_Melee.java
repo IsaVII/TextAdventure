@@ -19,7 +19,7 @@ public class Skill_Melee extends Skills_Base {
     public void printSkill(boolean fightMode, int currentCooldown, int nr)  {
         if (fightMode) {
             //if cooldown is not 0 -> italic font 
-            IO.println(String.format( currentCooldown > 0 ? UiHelpers.italic("\t\t%-20s %-15d %-15d"): "\t"+nr+".\t%-20s %-15d %-15d", name, damage, currentCooldown));
+            IO.println(String.format( currentCooldown > 0 ? UiHelpers.color(UiHelpers.italic("\t\t%-20s %-15d %-15d"), UiHelpers.GREY): "\t"+nr+".\t%-20s %-15d %-15d", name, damage, currentCooldown));
         }
     }
     
