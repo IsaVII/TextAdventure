@@ -17,13 +17,13 @@ public class EnemyManager {
     }
     
     private void createWolf() {
-        Enemy wolf = new Enemy("Wolf");
+        Enemy wolf = new Enemy("Wolf", 10);
         wolf.getSkills().addSkill(SkillManager.getSkill(SkillName.BITE));
         enemies.put(EnemyType.Wolf, wolf);
     }
     
     private void createBoar() {
-        Enemy boar = new Enemy("Boar");
+        Enemy boar = new Enemy("Boar",30);
         Skills skills = boar.getSkills();
         skills.addSkill(SkillManager.getSkill(SkillName.HEAVY_STRIKE));
         skills.addSkill(SkillManager.getSkill(SkillName.BITE));
