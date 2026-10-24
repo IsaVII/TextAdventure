@@ -1,0 +1,34 @@
+{
+  "FOREST": {
+    "healthMultiplier": 1.0,
+    "minGroupSize": 1,
+    "maxGroupSize": 3,
+    "enemies": [
+      { "type": "Wolf", "minSpawnChance": 0.4, "maxSpawnChance": 0.8 }
+    ]
+  },
+  "SWAMP": {
+    "healthMultiplier": 1.2,
+    "minGroupSize": 1,
+    "maxGroupSize": 2,
+    "enemies": [
+      { "type": "Boar", "minSpawnChance": 0.3, "maxSpawnChance": 0.7 }
+    ]
+  },
+  "CAVE": {
+    "healthMultiplier": 1.1,
+    "minGroupSize": 1,
+    "maxGroupSize": 2,
+    "enemies": [
+      { "type": "Goblin", "minSpawnChance": 0.5, "maxSpawnChance": 0.9 }
+    ]
+  },
+  "CASTLE": {
+    "healthMultiplier": 1.5,
+    "minGroupSize": 1,
+    "maxGroupSize": 1,
+    "enemies": [
+      { "type": "Vampire", "minSpawnChance": 0.6, "maxSpawnChance": 1.0 }
+    ]
+  }
+}

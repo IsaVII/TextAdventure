@@ -3,77 +3,81 @@ package IsaVII.fight;
 import IsaVII.character.MainCharacter;
 import IsaVII.character.Skill;
 import IsaVII.character.Skills;
-import IsaVII.skills.SkillManager;
+import IsaVII.enemies.Enemy;
 import IsaVII.skills.Skills_Base;
-    import IsaVII.ui.UiHelpers;
-    import IsaVII.ui.UserInputHelpers;
+import IsaVII.ui.UiHelpers;
+import IsaVII.ui.UserInputHelpers;
+
+import java.util.ArrayList;
 
 public class FightHandler {
-    
-    //for testing here, will be removed later
-    void main(){
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.BOLD));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.CYAN));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.YELLOW));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.GREEN));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.BLUE));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.MAGENTA));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.RED));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.GREY));
-        IO.println(UiHelpers.color("Welcome to the fight!", UiHelpers.TEST));
-        
-        
-        SkillManager skillManager = new SkillManager();
-        MainCharacter mainCharacter = new MainCharacter("Xemnas");
-        startFight(mainCharacter);
-    }
-    
-    
-    public static void startFight(MainCharacter mainCharacter) {
-        IO.println("Fight started!");
-        
-        //Todo:: show enemy 
-         handleFightMenu(mainCharacter);
-        
-    
-    }
-    
-    private static void handleFightMenu(MainCharacter mainCharacter){
 
+    ArrayList<Enemy> enemies;
+
+    public FightHandler(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void startFight() {
+        IO.println("You are being attacked");
+
+        handleFightMenu();
+    }
+
+    private void printEnemies() {
+        UiHelpers.printLine();
+        for (Enemy enemy : enemies) {
+            IO.println("\t" + enemy.getName() + " with health: " + enemy.getHealth());
+        }
+        UiHelpers.printLine();
+
+    }
+
+    private void handleFightMenu() {
+
+        printEnemies();
         printFightMenu();
         int choice = UserInputHelpers.getMenuNumberFromUserInRange("What do you want to do?", 1, 3);
 
+        MainCharacter mainCharacter = MainCharacter.getInstance();
         switch (choice) {
             case 1:
                 chooseSkill(mainCharacter);
-         
+
                 break;
             case 2:
                 //Todo:: handle items
                 break;
             case 3:
                 //Todo:: handle flee
-                
+
                 return;
         }
 
         mainCharacter.roundEnded();
-        handleFightMenu(mainCharacter);
+
+        if (enemies.isEmpty()) {
+            IO.println("You have defeated all enemies!");
+            return;
+        }
+
+        handleFightMenu();
+
     }
 
-    private static void printFightMenu() {
+    private void printFightMenu() {
         IO.println("Fight Menu:");
         IO.println("\t1. Attack");
         IO.println("\t2. Use Item");
         IO.println("\t3. Flee");
     }
 
-    public static void chooseSkill(MainCharacter mainCharacter) {
+    public void chooseSkill(MainCharacter mainCharacter) {
         UiHelpers.printLine();
         IO.println("You chose to attack!");
 
         Skills skills = mainCharacter.getSkills();
-        
+
         //print skill list and get user input for skill choice
         skills.printSkillList();
         int skillCount = skills.getSkillCount();
@@ -84,31 +88,82 @@ public class FightHandler {
 
             if (selectedSkill.isOnCooldown()) {
                 IO.println("This skill is on cooldown for " + selectedSkill.getCurrentCooldown() + " more rounds.\n");
-            }
-            else {
+            } else {
                 handleSkillUsage(selectedSkill);
                 return;
             }
-
         }
-        
     }
-    
-    //Todo:: add enemy as reference to handle skill usage
-    public static void handleSkillUsage(Skill skill) {
+
+    public void handleSkillUsage(Skill skill) {
 
         Skills_Base skillBase = skill.getSkill();
         boolean hasMultipleTargets = skillBase.getTargetCount() > 1;
         if (hasMultipleTargets) {
-            IO.println("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to "+ skillBase.getTargetCount() + " targets!");
+            attackSeveralEnemies(skillBase);
+        } else {
+            attackSingleEnemy(skillBase);
         }
-        else {
-            IO.println("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage!");
-        }
-        
+
+        checkForDeadEnemies();
         UiHelpers.printLine();
         IO.println();
-        
+
         skill.startCooldown();
     }
+
+    private void attackSingleEnemy(Skills_Base skillBase) {
+        Enemy enemy = null;
+        if (enemies.size() > 1) {
+            enemy = chooseEnemyToAttack(skillBase);
+
+        } else {
+            enemy = enemies.getFirst();
+        }
+
+        dealDamageToSingleEnemy(skillBase, enemy);
+    }
+
+    private void dealDamageToSingleEnemy(Skills_Base skillBase, Enemy enemy) {
+        enemy.receiveDamage(skillBase.getDamage());
+        IO.println(UiHelpers.color("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to " + enemy.getName() + "!", UiHelpers.BLUE));
+    }
+
+    private void attackSeveralEnemies(Skills_Base skillBase) {
+        int maxTargets = Math.min(skillBase.getTargetCount(), enemies.size());
+
+        for (int i = 0; i < maxTargets; i++) {
+            Enemy enemy = enemies.get(i);
+            enemy.receiveDamage(skillBase.getDamage());
+        }
+
+        IO.println(UiHelpers.color("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to " + maxTargets + " targets!", UiHelpers.BLUE));
+    }
+
+
+    private Enemy chooseEnemyToAttack(Skills_Base skillBase) {
+        IO.println("Select an enemy to attack:");
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
+            IO.println("\t" + (i + 1) + ". " + enemy.getName() + " with health: " + enemy.getHealth());
+        }
+        int choice = UserInputHelpers.getMenuNumberFromUserInRange("Which enemy do you want to attack?", 1, enemies.size());
+        return enemies.get(choice - 1);
+    }
+
+    private void checkForDeadEnemies() {
+
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+        for (Enemy enemy : enemies) {
+            if (enemy.isDead()) {
+                deadEnemies.add(enemy);
+            }
+        }
+
+        for (Enemy deadEnemy : deadEnemies) {
+            IO.println(UiHelpers.color(deadEnemy.getName() + " has been defeated!", UiHelpers.GREEN));
+            enemies.remove(deadEnemy);
+        }
+    }
+
 }

@@ -16,6 +16,16 @@ public class Enemy implements Health_Interface {
         skills = new Skills();
     }
 
+    public Enemy(Enemy enemy) {
+        this(enemy, 1.0);
+    }
+
+    public Enemy(Enemy enemy, double healthMultiplier) {
+        this.name = enemy.name;
+        this.health = new Health((int) Math.round(enemy.health.getHealth() * healthMultiplier));
+        this.skills = new Skills(enemy.skills);
+    }
+
     // **** Health_Interface methods **** 
     @Override
     public void addHealth(int amount) {

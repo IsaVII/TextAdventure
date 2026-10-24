@@ -8,7 +8,16 @@ public class Skills {
     
     //skill + cooldown
     ArrayList<Skill> skills = new ArrayList<>();
-    
+
+    public Skills() {
+    }
+
+    public Skills(Skills skills) {
+        for (Skill skill : skills.skills) {
+            this.skills.add(new Skill(skill.getSkill()));
+        }
+    }
+
     public void addSkill(Skills_Base skill) {
         skills.add(new Skill(skill));
     }

@@ -1,19 +1,27 @@
 package IsaVII;
 
 import IsaVII.character.MainCharacter;
-import IsaVII.fight.FightHandler;
+import IsaVII.fight.FightManager;
 import IsaVII.skills.SkillManager;
-import IsaVII.ui.UserInputHelpers;
+import IsaVII.world.AreaType;
+
 
 public class AdventureApp {
-    static void main() {
-
-        SkillManager skillManager = new SkillManager();
-
-        MainCharacter mainCharacter = new MainCharacter("Xemnas");
-        FightHandler.startFight(mainCharacter);
+    static FightManager fightManager;
+    static SkillManager skillManager;
+    private static MainCharacter mainCharacter;
+    
+    void main() {
+        skillManager = new SkillManager();
+        fightManager = new FightManager();
+        mainCharacter = new MainCharacter("Xemnas");
+        
+        fightManager.initializeFight(AreaType.FOREST);
         
         
-        
+    }
+    
+    public static MainCharacter getMainCharacter() {
+        return mainCharacter;
     }
 }

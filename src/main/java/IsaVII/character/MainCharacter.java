@@ -1,6 +1,7 @@
 package IsaVII.character;
 
 
+import IsaVII.AdventureApp;
 import IsaVII.fight.Health;
 import IsaVII.fight.Health_Interface;
 import IsaVII.skills.SkillManager;
@@ -19,7 +20,11 @@ public class MainCharacter implements Health_Interface {
         health = new Health(100);
         InitSkills();
     }
-    
+
+    public static MainCharacter getInstance() {
+        return AdventureApp.getMainCharacter();
+    }
+
     private void InitSkills(){
         skills = new Skills();
         skills.addSkill(SkillManager.getSkill(SkillName.SLASH));
