@@ -1,0 +1,7 @@
+     ^       ^       ^
+    /|\     /|\     /|\
+   / | \   / | \   / | \
+     |       |       |
+   .-'"'-.   A sunlit clearing opens before you.
+  (  o o  )      Moss covers the old stones.
+   '-...-'

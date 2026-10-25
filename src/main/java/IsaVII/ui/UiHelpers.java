@@ -32,6 +32,11 @@ public class UiHelpers {
         return UNDERLINE + text + RESET;
     }
 
+    public static void clearConsole() {
+        System.out.print("[H[2J[3J");
+        System.out.flush();
+    }
+
     public static void printLine(boolean thin) {
         if (thin) {
             IO.println("-------------------");

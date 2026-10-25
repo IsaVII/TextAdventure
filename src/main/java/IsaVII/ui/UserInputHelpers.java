@@ -1,5 +1,9 @@
 package IsaVII.ui;
 
+import IsaVII.world.Direction;
+
+import java.util.Set;
+
 public class UserInputHelpers {
 
     // **** USER INPUTS ****
@@ -46,5 +50,32 @@ public class UserInputHelpers {
         }
         return menuNumber;
     }
-    
+
+    public static Direction getDirectionFromUser(Set<Direction> allowedDirections) {
+        while (true) {
+            String userInput = IO.readln("Where do you want to go?: ");
+
+            try {
+                Direction direction = Direction.valueOf(userInput.trim().toUpperCase());
+                if (allowedDirections.contains(direction)) {
+                    return direction;
+                }
+            } catch (IllegalArgumentException e) {
+            }
+
+            IO.println("Invalid direction. Please choose one of: " + describeDirections(allowedDirections));
+        }
+    }
+
+    private static String describeDirections(Set<Direction> directions) {
+        StringBuilder sb = new StringBuilder();
+        for (Direction direction : directions) {
+            if (!sb.isEmpty()) {
+                sb.append(", ");
+            }
+            sb.append(direction.name().toLowerCase());
+        }
+        return sb.toString();
+    }
+
 }

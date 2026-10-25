@@ -1,0 +1,49 @@
+{
+  "forest_entrance": {
+    "areaType": "FOREST",
+    "artPath": "ascii/forest-1.txt",
+    "monsterAttacksPossible": true,
+    "boss": "NONE",
+    "exits": {
+      "FORWARD": "mossy_clearing",
+      "DOWN": "deadroot_hollow"
+    }
+  },
+  "mossy_clearing": {
+    "areaType": "FOREST",
+    "artPath": "ascii/forest-2.txt",
+    "monsterAttacksPossible": true,
+    "boss": "NONE",
+    "exits": {
+      "LEFT": "deadroot_hollow",
+      "RIGHT": "twisted_path",
+      "DOWN": "boss_lair"
+    }
+  },
+  "deadroot_hollow": {
+    "areaType": "FOREST",
+    "artPath": "ascii/forest-3.txt",
+    "monsterAttacksPossible": false,
+    "boss": "NONE",
+    "exits": {
+      "LEFT": "twisted_path"
+    }
+  },
+  "twisted_path": {
+    "areaType": "FOREST",
+    "artPath": "ascii/forest-4.txt",
+    "monsterAttacksPossible": true,
+    "boss": "NONE",
+    "exits": {
+      "FORWARD": "mossy_clearing",
+      "RIGHT": "boss_lair"
+    }
+  },
+  "boss_lair": {
+    "areaType": "FOREST",
+    "artPath": "ascii/forest-5.txt",
+    "monsterAttacksPossible": false,
+    "boss": "FOREST_GUARDIAN",
+    "exits": {}
+  }
+}
