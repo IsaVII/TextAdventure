@@ -32,7 +32,11 @@ public class UiHelpers {
         return UNDERLINE + text + RESET;
     }
 
-    public static void printLine() {
-        IO.println("===================");
+    public static void printLine(boolean thin) {
+        if (thin) {
+            IO.println("-------------------");
+        } else {
+            IO.println("===================");
+        }
     }
 }

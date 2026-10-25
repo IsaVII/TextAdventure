@@ -50,4 +50,21 @@ public class Skills {
     public int getSkillCount() {
         return skills.size();
     }
+
+    public Skill getRandomSkill() {
+         //check if cooldown is 0 and return a random skill that is not on cooldown
+        ArrayList<Skill> availableSkills = new ArrayList<>();
+        for (Skill skill : skills) {
+            if (!skill.isOnCooldown()) {
+                availableSkills.add(skill);
+            }
+        }
+        
+        if (availableSkills.isEmpty()) {
+            return null; // No available skills
+        }
+        
+        int randomIndex = (int) (Math.random() * availableSkills.size());
+        return availableSkills.get(randomIndex);
+    }
 }

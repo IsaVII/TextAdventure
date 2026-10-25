@@ -6,5 +6,5 @@ public interface Health_Interface {
     void receiveDamage(int damage);
     boolean isDead();
     int getHealth();
-
+    String printHealth();   
 }

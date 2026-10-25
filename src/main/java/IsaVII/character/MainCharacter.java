@@ -56,6 +56,11 @@ public class MainCharacter implements Health_Interface {
         return health.getHealth();
     }
 
+    @Override
+    public String printHealth() {
+        return health.printHealth();
+    }
+
 
     
     //****  Getters **** 

@@ -1,5 +1,6 @@
 package IsaVII.enemies;
 
+import IsaVII.character.Skill;
 import IsaVII.character.Skills;
 import IsaVII.fight.Health;
 import IsaVII.fight.Health_Interface;
@@ -47,6 +48,11 @@ public class Enemy implements Health_Interface {
         return health.getHealth();
     }
     
+    @Override
+    public String printHealth() {
+        return health.printHealth();
+    }
+    
     public String getName() {
         return name;
     }
@@ -54,4 +60,10 @@ public class Enemy implements Health_Interface {
     public Skills getSkills() {
         return skills;
     }
+
+    public Skill getRandomAttackSkill() {
+        return skills.getRandomSkill();
+    }
+    
+    
 }

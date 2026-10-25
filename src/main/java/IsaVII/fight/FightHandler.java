@@ -13,25 +13,59 @@ import java.util.ArrayList;
 public class FightHandler {
 
     ArrayList<Enemy> enemies;
+    boolean isFighting = true;
+
+    MainCharacter mainCharacter;
 
     public FightHandler(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
+        this.mainCharacter = MainCharacter.getInstance();
     }
 
     public void startFight() {
         IO.println("You are being attacked");
 
-        handleFightMenu();
-    }
-
-    private void printEnemies() {
-        UiHelpers.printLine();
-        for (Enemy enemy : enemies) {
-            IO.println("\t" + enemy.getName() + " with health: " + enemy.getHealth());
+        //Chance that it's a surprise encounter  
+        if (Math.random() < 0.9) {
+            IO.println(UiHelpers.color("It's a surprise encounter! The enemies get the first attack!", UiHelpers.RED));
+            printEnemies();
+            enemyAttacks();
+            printPlayerHealth();
         }
-        UiHelpers.printLine();
-
+        
+        while (isFighting) {
+            //Player's turn
+            handleFightMenu();
+            
+            //Enemies' turn
+            if (isFighting) {
+                enemyAttacks();
+                printPlayerHealth();
+            }
+        }
     }
+
+    private void printPlayerHealth() {
+        IO.println("Your health: " +   mainCharacter.printHealth());
+    }
+
+    private void enemyAttacks() {
+          
+        for (Enemy enemy : enemies) {
+            Skill skill = enemy.getRandomAttackSkill();
+            
+            if (skill == null) {
+                IO.println(UiHelpers.color(enemy.getName() + " has no skills to attack with!", UiHelpers.RED));
+                continue;
+            }
+            
+            Skills_Base skillBase = skill.getSkill();
+            mainCharacter.receiveDamage(skillBase.getDamage());
+            IO.println(UiHelpers.color(enemy.getName() + " used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to you!", UiHelpers.RED));
+        }
+    }
+
+  
 
     private void handleFightMenu() {
 
@@ -39,41 +73,39 @@ public class FightHandler {
         printFightMenu();
         int choice = UserInputHelpers.getMenuNumberFromUserInRange("What do you want to do?", 1, 3);
 
-        MainCharacter mainCharacter = MainCharacter.getInstance();
         switch (choice) {
             case 1:
-                chooseSkill(mainCharacter);
+                chooseSkill();
 
                 break;
             case 2:
                 //Todo:: handle items
                 break;
             case 3:
-                //Todo:: handle flee
-
-                return;
+                IO.println(UiHelpers.color("You fled from the fight!", UiHelpers.YELLOW));
+                isFighting = false;
+                break;
         }
 
         mainCharacter.roundEnded();
 
         if (enemies.isEmpty()) {
             IO.println("You have defeated all enemies!");
-            return;
+            isFighting = false;
         }
 
-        handleFightMenu();
 
     }
 
     private void printFightMenu() {
-        IO.println("Fight Menu:");
-        IO.println("\t1. Attack");
-        IO.println("\t2. Use Item");
-        IO.println("\t3. Flee");
+        IO.println(String.format("%-20s\t | %s", "Fight Menu:", "Your health: " + mainCharacter.printHealth()));
+        IO.println(String.format("\t%-20s |", "1. Attack"));
+        IO.println(String.format("\t%-20s |", "2. Use Item"));
+        IO.println(String.format("\t%-20s |", "3. Flee"));
     }
 
-    public void chooseSkill(MainCharacter mainCharacter) {
-        UiHelpers.printLine();
+    public void chooseSkill() {
+        UiHelpers.printLine(true);
         IO.println("You chose to attack!");
 
         Skills skills = mainCharacter.getSkills();
@@ -106,7 +138,7 @@ public class FightHandler {
         }
 
         checkForDeadEnemies();
-        UiHelpers.printLine();
+        UiHelpers.printLine(true);
         IO.println();
 
         skill.startCooldown();
@@ -164,6 +196,16 @@ public class FightHandler {
             IO.println(UiHelpers.color(deadEnemy.getName() + " has been defeated!", UiHelpers.GREEN));
             enemies.remove(deadEnemy);
         }
+    }
+
+    private void printEnemies() {
+        UiHelpers.printLine(true);
+        IO.println("Enemies:");
+        for (Enemy enemy : enemies) {
+            IO.println("\t" + enemy.getName() + " with health: " + enemy.getHealth());
+        }
+        UiHelpers.printLine(true);
+
     }
 
 }
