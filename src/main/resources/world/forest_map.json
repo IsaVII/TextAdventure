@@ -2,6 +2,7 @@
   "forest_entrance": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-1.txt",
+    "description": "The forest looms ahead, its canopy swallowing the daylight.",
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
@@ -11,10 +12,11 @@
   "forest-t-path": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-2.txt",
+    "description": "The path splits here, winding deeper into the trees in either direction.",
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
-      "LEFT": "depp-forest",
+      "LEFT": "deep-forest",
       "RIGHT": "forest-clearing",
       "DOWN": "forest_entrance"
     }
@@ -22,14 +24,15 @@
   "forest-clearing": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-3.txt",
+    "description": "A quiet clearing opens up, sunlight breaking through the leaves above.",
     "monsterAttacksPossible": false,
     "boss": "NONE",
     "exits": {
       "LEFT": "forest-t-path"
     },
-    "objects": [
+    "worldObject": [
       {
-        "type": "CHEST",
+        "objectType": "CHEST",
         "contents": [
           { "itemType": "HEALTH_POTION", "quantity": 2 }
         ]
@@ -39,6 +42,7 @@
   "deep-forest": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-4.txt",
+    "description": "The trees grow dense and twisted, and the air feels colder here.",
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
@@ -49,6 +53,7 @@
   "boss-lair": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-5.txt",
+    "description": "A heavy silence hangs over this hollow, broken only by slow, deliberate breathing.",
     "monsterAttacksPossible": false,
     "boss": "FOREST_GUARDIAN",
     "exits": {}

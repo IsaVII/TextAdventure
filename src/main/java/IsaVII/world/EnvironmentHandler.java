@@ -1,8 +1,12 @@
 package IsaVII.world;
 
+import IsaVII.Objects.WorldObject;
+import IsaVII.character.MainCharacter;
 import IsaVII.fight.FightManager;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
+
+import java.util.List;
 
 public class EnvironmentHandler {
 
@@ -37,8 +41,35 @@ public class EnvironmentHandler {
                 fightManager.initializeFight(node.getAreaType());
             }
 
-            Direction direction = UserInputHelpers.getDirectionFromUser(node.getExits().keySet());
-            currentNodeId = node.getExits().get(direction);
+            List<WorldObject> interactables = node.getWorldObjects().stream().filter(o -> !o.isOpened()).toList();
+            List<String> actions = interactables.stream().map(WorldObject::getCommand).toList();
+
+            String command = UserInputHelpers.getDirectionOrActionFromUser(node.getExits().keySet(), actions);
+
+            Direction direction = asDirection(command);
+            if (direction != null) {
+                currentNodeId = node.getExits().get(direction);
+            } else {
+                performAction(interactables, command);
+            }
+        }
+    }
+
+    private Direction asDirection(String command) {
+        try {
+            return Direction.valueOf(command);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    private void performAction(List<WorldObject> interactables, String command) {
+        for (WorldObject worldObject : interactables) {
+            if (worldObject.getCommand().equalsIgnoreCase(command)) {
+                String result = worldObject.interact(MainCharacter.getInstance().getInventory());
+                IO.println(UiHelpers.color(result, UiHelpers.GREEN));
+                return;
+            }
         }
     }
 
@@ -46,12 +77,21 @@ public class EnvironmentHandler {
         UiHelpers.clearConsole();
         IO.println(environmentManager.loadArt(node.getArtPath()));
         IO.println();
+
+        if (node.getDescription() != null && !node.getDescription().isEmpty()) {
+            IO.println(node.getDescription());
+            IO.println();
+        }
+
         UiHelpers.printLine(true);
 
         if (node.hasBoss()) {
             IO.println(UiHelpers.color("A powerful presence blocks your path: " + node.getBoss(), UiHelpers.MAGENTA));
         } else {
             IO.println("You can go: " + describeExits(node));
+            if (node.hasInteractableObjects()) {
+                IO.println("You can also: " + describeActions(node));
+            }
         }
 
         UiHelpers.printLine(true);
@@ -64,6 +104,20 @@ public class EnvironmentHandler {
                 sb.append(" - ");
             }
             sb.append(direction.name().toLowerCase());
+        }
+        return sb.toString();
+    }
+
+    private String describeActions(EnvironmentNode node) {
+        StringBuilder sb = new StringBuilder();
+        for (WorldObject worldObject : node.getWorldObjects()) {
+            if (worldObject.isOpened()) {
+                continue;
+            }
+            if (!sb.isEmpty()) {
+                sb.append(" - ");
+            }
+            sb.append(worldObject.getCommand());
         }
         return sb.toString();
     }

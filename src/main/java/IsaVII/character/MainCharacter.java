@@ -2,19 +2,21 @@ package IsaVII.character;
 
 
 import IsaVII.AdventureApp;
+import IsaVII.Objects.Inventory;
 import IsaVII.fight.Health;
 import IsaVII.fight.Health_Interface;
 import IsaVII.skills.SkillManager;
 import IsaVII.skills.SkillName;
 
 public class MainCharacter implements Health_Interface {
-    
-    private final String name; 
+
+    private final String name;
     private Skills skills;
     private Health health;
-   
+    private final Inventory inventory = new Inventory();
+
     private int coins = 0;
-    
+
     public MainCharacter(String name) {
         this.name = name;
         health = new Health(100);
@@ -75,5 +77,9 @@ public class MainCharacter implements Health_Interface {
 
     public int getCoins() {
         return coins;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

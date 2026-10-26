@@ -21,7 +21,7 @@ public class EnvironmentManager {
     public EnvironmentManager() {
         nodes = loadMap(FOREST_MAP_PATH);
     }
-
+    
     private Map<String, EnvironmentNode> loadMap(String path) {
         try (Reader reader = new InputStreamReader(
                 getClass().getClassLoader().getResourceAsStream(path),
