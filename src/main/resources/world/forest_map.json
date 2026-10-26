@@ -5,41 +5,48 @@
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
-      "FORWARD": "mossy_clearing",
-      "DOWN": "deadroot_hollow"
+      "FORWARD": "forest-t-path"
     }
   },
-  "mossy_clearing": {
+  "forest-t-path": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-2.txt",
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
-      "LEFT": "deadroot_hollow",
-      "RIGHT": "twisted_path",
-      "DOWN": "boss_lair"
+      "LEFT": "depp-forest",
+      "RIGHT": "forest-clearing",
+      "DOWN": "forest_entrance"
     }
   },
-  "deadroot_hollow": {
+  "forest-clearing": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-3.txt",
     "monsterAttacksPossible": false,
     "boss": "NONE",
     "exits": {
-      "LEFT": "twisted_path"
-    }
+      "LEFT": "forest-t-path"
+    },
+    "objects": [
+      {
+        "type": "CHEST",
+        "contents": [
+          { "itemType": "HEALTH_POTION", "quantity": 2 }
+        ]
+      }
+    ]
   },
-  "twisted_path": {
+  "deep-forest": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-4.txt",
     "monsterAttacksPossible": true,
     "boss": "NONE",
     "exits": {
-      "FORWARD": "mossy_clearing",
-      "RIGHT": "boss_lair"
+      "FORWARD": "boss-lair",
+      "RIGHT": "forest-t-path"
     }
   },
-  "boss_lair": {
+  "boss-lair": {
     "areaType": "FOREST",
     "artPath": "ascii/forest-5.txt",
     "monsterAttacksPossible": false,
