@@ -1,0 +1,19 @@
+{
+  "action.inventory": "öppna inventarie",
+  "environment.boss_blocks_path": "En mäktig närvaro blockerar din väg: %s",
+  "environment.danger_sensed": "Du känner fara i närheten...",
+  "environment.can_go": "Du kan gå: %s",
+  "environment.can_also": "Du kan också: %s",
+  "inventory.title": "Inventarie:",
+  "inventory.empty": "(tomt)",
+  "inventory.menu.use": "1. Använd ett föremål",
+  "inventory.menu.remove": "2. Ta bort ett föremål",
+  "inventory.menu.back": "3. Tillbaka",
+  "inventory.menu.prompt": "Vad vill du göra?",
+  "inventory.use.none": "Du har inga föremål att använda.",
+  "inventory.use.prompt": "Vilket föremål vill du använda?",
+  "inventory.use.success": "Du använde %s.",
+  "inventory.remove.none": "Du har inga föremål att ta bort.",
+  "inventory.remove.prompt": "Vilket föremål vill du ta bort?",
+  "inventory.remove.success": "Du slängde %s."
+}

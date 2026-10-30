@@ -3,6 +3,7 @@ package IsaVII.inventory;
 import IsaVII.Objects.Inventory;
 import IsaVII.Objects.Items.Item;
 import IsaVII.character.MainCharacter;
+import IsaVII.localization.LocalizationManager;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 
@@ -20,7 +21,7 @@ public class InventoryHandler {
               /_____________/ |
              |  __________  | |
              | |          | | |
-             | |  POCKETS | | |
+             | |          | | |
              | |__________| | |
              |_______________|/
             """;
@@ -40,7 +41,7 @@ public class InventoryHandler {
 
             showInventory(inventory, items);
 
-            int choice = UserInputHelpers.getMenuNumberFromUserInRange("What do you want to do?", 1, 3);
+            int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("inventory.menu.prompt"), 1, 3);
 
             switch (choice) {
                 case 1 -> useItem(inventory, items);
@@ -55,10 +56,10 @@ public class InventoryHandler {
         IO.println(BACKPACK_ART);
         IO.println();
         UiHelpers.printLine(true);
-        IO.println("Inventory:");
+        IO.println(LocalizationManager.getText("inventory.title"));
 
         if (items.isEmpty()) {
-            IO.println("\t(empty)");
+            IO.println("\t" + LocalizationManager.getText("inventory.empty"));
         } else {
             for (int i = 0; i < items.size(); i++) {
                 Item item = items.get(i);
@@ -67,34 +68,34 @@ public class InventoryHandler {
         }
 
         UiHelpers.printLine(true);
-        IO.println("1. Use an item");
-        IO.println("2. Remove an item");
-        IO.println("3. Back");
+        IO.println(LocalizationManager.getText("inventory.menu.use"));
+        IO.println(LocalizationManager.getText("inventory.menu.remove"));
+        IO.println(LocalizationManager.getText("inventory.menu.back"));
     }
 
     private void useItem(Inventory inventory, List<Item> items) {
         if (items.isEmpty()) {
-            IO.println(UiHelpers.color("You have no items to use.", UiHelpers.YELLOW));
+            IO.println(UiHelpers.color(LocalizationManager.getText("inventory.use.none"), UiHelpers.YELLOW));
             return;
         }
 
-        Item item = chooseItem("Which item do you want to use?", items);
+        Item item = chooseItem(LocalizationManager.getText("inventory.use.prompt"), items);
 
         applyItemEffect(item);
         inventory.removeItem(item, 1);
-        IO.println(UiHelpers.color("You used " + item.getName() + ".", UiHelpers.GREEN));
+        IO.println(UiHelpers.color(LocalizationManager.getText("inventory.use.success", item.getName()), UiHelpers.GREEN));
     }
 
     private void discardItem(Inventory inventory, List<Item> items) {
         if (items.isEmpty()) {
-            IO.println(UiHelpers.color("You have no items to remove.", UiHelpers.YELLOW));
+            IO.println(UiHelpers.color(LocalizationManager.getText("inventory.remove.none"), UiHelpers.YELLOW));
             return;
         }
 
-        Item item = chooseItem("Which item do you want to remove?", items);
+        Item item = chooseItem(LocalizationManager.getText("inventory.remove.prompt"), items);
 
         inventory.removeItem(item, 1);
-        IO.println(UiHelpers.color("You discarded " + item.getName() + ".", UiHelpers.YELLOW));
+        IO.println(UiHelpers.color(LocalizationManager.getText("inventory.remove.success", item.getName()), UiHelpers.YELLOW));
     }
 
     private Item chooseItem(String prompt, List<Item> items) {

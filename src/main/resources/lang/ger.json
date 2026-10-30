@@ -1,0 +1,19 @@
+{
+  "action.inventory": "inventar öffnen",
+  "environment.boss_blocks_path": "Eine mächtige Präsenz blockiert deinen Weg: %s",
+  "environment.danger_sensed": "Du spürst Gefahr in der Nähe...",
+  "environment.can_go": "Du kannst gehen: %s",
+  "environment.can_also": "Du kannst außerdem: %s",
+  "inventory.title": "Inventar:",
+  "inventory.empty": "(leer)",
+  "inventory.menu.use": "1. Gegenstand benutzen",
+  "inventory.menu.remove": "2. Gegenstand entfernen",
+  "inventory.menu.back": "3. Zurück",
+  "inventory.menu.prompt": "Was möchtest du tun?",
+  "inventory.use.none": "Du hast keine Gegenstände zu benutzen.",
+  "inventory.use.prompt": "Welchen Gegenstand möchtest du benutzen?",
+  "inventory.use.success": "Du hast %s benutzt.",
+  "inventory.remove.none": "Du hast keine Gegenstände zu entfernen.",
+  "inventory.remove.prompt": "Welchen Gegenstand möchtest du entfernen?",
+  "inventory.remove.success": "Du hast %s weggeworfen."
+}

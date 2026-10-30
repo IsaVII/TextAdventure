@@ -3,6 +3,7 @@ package IsaVII;
 import IsaVII.Objects.ItemManager;
 import IsaVII.character.MainCharacter;
 import IsaVII.fight.FightManager;
+import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.SkillManager;
 import IsaVII.world.EnvironmentHandler;
 import IsaVII.world.EnvironmentManager;
@@ -12,12 +13,14 @@ public class AdventureApp {
     private static FightManager fightManager;
     private static SkillManager skillManager;
     private static ItemManager itemManager;
+    private static LocalizationManager localizationManager;
     private static EnvironmentManager environmentManager;
     private static MainCharacter mainCharacter;
 
     void main() {
         skillManager = new SkillManager();
         itemManager = new ItemManager();
+        localizationManager = new LocalizationManager();
         fightManager = new FightManager();
         environmentManager = new EnvironmentManager();
         

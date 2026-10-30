@@ -4,6 +4,7 @@ import IsaVII.Objects.WorldObject;
 import IsaVII.character.MainCharacter;
 import IsaVII.fight.FightManager;
 import IsaVII.inventory.InventoryHandler;
+import IsaVII.localization.LocalizationManager;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 
@@ -11,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnvironmentHandler {
-
-    private static final String INVENTORY_ACTION = "open inventory";
 
     private final EnvironmentManager environmentManager;
     private final FightManager fightManager;
@@ -43,26 +42,30 @@ public class EnvironmentHandler {
 
             //check for random monster attacks
             if (node.isMonsterAttacksPossible() && Math.random() < 0.01) { //todo:: make this chance configurable
-                IO.println(UiHelpers.color("You sense danger nearby...", UiHelpers.RED));
+                IO.println(UiHelpers.color(LocalizationManager.getText("environment.danger_sensed"), UiHelpers.RED));
                 fightManager.initializeFight(node.getAreaType());
             }
 
             //interactable object actions, plus the player actions always available (e.g. checking the inventory)
             List<WorldObject> interactables = node.getWorldObjects().stream().filter(o -> !o.isOpened()).toList();
             List<String> actions = new ArrayList<>(interactables.stream().map(WorldObject::getCommand).toList());
-            actions.add(INVENTORY_ACTION);
+            actions.add(inventoryAction());
 
             String command = UserInputHelpers.getDirectionOrActionFromUser(node.getExits().keySet(), actions);
 
             Direction direction = asDirection(command);
             if (direction != null) {
                 currentNodeId = node.getExits().get(direction);
-            } else if (command.equalsIgnoreCase(INVENTORY_ACTION)) {
+            } else if (command.equalsIgnoreCase(inventoryAction())) {
                 new InventoryHandler(MainCharacter.getInstance()).open();
             } else {
                 performAction(interactables, command);
             }
         }
+    }
+
+    private String inventoryAction() {
+        return LocalizationManager.getText("action.inventory");
     }
 
     private Direction asDirection(String command) {
@@ -96,10 +99,10 @@ public class EnvironmentHandler {
         UiHelpers.printLine(true);
 
         if (node.hasBoss()) {
-            IO.println(UiHelpers.color("A powerful presence blocks your path: " + node.getBoss(), UiHelpers.MAGENTA));
+            IO.println(UiHelpers.color(LocalizationManager.getText("environment.boss_blocks_path", node.getBoss()), UiHelpers.MAGENTA));
         } else {
-            IO.println(String.format("%-20s", "You can go: " + describeExits(node)));
-            IO.println(String.format("%-20s", "You can also: " + describeActions(node)));
+            IO.println(String.format("%-20s", LocalizationManager.getText("environment.can_go", describeExits(node))));
+            IO.println(String.format("%-20s", LocalizationManager.getText("environment.can_also", describeActions(node))));
         }
 
         UiHelpers.printLine(true);
@@ -130,7 +133,7 @@ public class EnvironmentHandler {
         if (!sb.isEmpty()) {
             sb.append(" - ");
         }
-        sb.append(INVENTORY_ACTION);
+        sb.append(inventoryAction());
         return sb.toString();
     }
 }

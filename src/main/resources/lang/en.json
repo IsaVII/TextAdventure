@@ -1,0 +1,19 @@
+{
+  "action.inventory": "open inventory",
+  "environment.boss_blocks_path": "A powerful presence blocks your path: %s",
+  "environment.danger_sensed": "You sense danger nearby...",
+  "environment.can_go": "You can go: %s",
+  "environment.can_also": "You can also: %s",
+  "inventory.title": "Inventory:",
+  "inventory.empty": "(empty)",
+  "inventory.menu.use": "1. Use an item",
+  "inventory.menu.remove": "2. Remove an item",
+  "inventory.menu.back": "3. Back",
+  "inventory.menu.prompt": "What do you want to do?",
+  "inventory.use.none": "You have no items to use.",
+  "inventory.use.prompt": "Which item do you want to use?",
+  "inventory.use.success": "You used %s.",
+  "inventory.remove.none": "You have no items to remove.",
+  "inventory.remove.prompt": "Which item do you want to remove?",
+  "inventory.remove.success": "You discarded %s."
+}
