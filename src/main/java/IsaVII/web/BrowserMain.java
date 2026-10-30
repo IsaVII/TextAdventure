@@ -14,10 +14,23 @@ import java.nio.charset.StandardCharsets;
 public class BrowserMain {
 
     public static void main(String[] args) {
-        System.setOut(new PrintStream(new JsOutputStream(), true, StandardCharsets.UTF_8));
+        // Raw diagnostic breadcrumb, bypassing System.out entirely: if this line never
+        // shows up in the terminal, the Java<->JS native bridge itself isn't resolving,
+        // as opposed to a failure somewhere later in the game's own startup logic.
+        BrowserIO.jsWrite("[BrowserMain] native bridge reachable, starting game...");
+
+        PrintStream bridgeOut = new PrintStream(new JsOutputStream(), true, StandardCharsets.UTF_8);
+        System.setOut(bridgeOut);
+        System.setErr(bridgeOut);
         System.setIn(new JsInputStream());
 
-        AdventureApp.main(args);
+        try {
+            AdventureApp.main(args);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            BrowserIO.jsWrite("[BrowserMain] " + t);
+            throw t;
+        }
     }
 
     private static class JsOutputStream extends OutputStream {
