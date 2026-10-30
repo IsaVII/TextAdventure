@@ -60,7 +60,14 @@
   async function main() {
     await cheerpjInit();
     term.write("Starting game...\r\n");
-    const exitCode = await cheerpjRunMain("IsaVII.web.BrowserMain", "/app/TextAdventure.jar");
+
+    // /app/ maps to the site's domain root, not the folder index.html lives in -
+    // on a GitHub Pages project site (e.g. https://user.github.io/Repo/) that's a
+    // subpath, so the jar's classpath entry has to include that subpath too.
+    const pageDir = window.location.pathname.replace(/[^/]*$/, "");
+    const jarPath = "/app" + pageDir + "TextAdventure.jar";
+
+    const exitCode = await cheerpjRunMain("IsaVII.web.BrowserMain", jarPath);
     term.write("\r\n[Game exited with code " + exitCode + "]\r\n");
   }
 
