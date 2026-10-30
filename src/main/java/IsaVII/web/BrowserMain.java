@@ -53,6 +53,21 @@ public class BrowserMain {
 
         @Override
         public int read() throws IOException {
+            byte[] single = new byte[1];
+            int read = read(single, 0, 1);
+            return read == -1 ? -1 : (single[0] & 0xFF);
+        }
+
+        // Scanner/InputStreamReader don't read one byte at a time - they ask to bulk-fill a
+        // buffer of hundreds/thousands of bytes. InputStream.read(byte[],off,len) is allowed
+        // to return fewer bytes than requested, so this returns as soon as the current
+        // buffered line is exhausted instead of blocking on a second jsReadLine() call to
+        // keep filling the caller's buffer (which would silently eat the player's next line).
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException {
+            if (len == 0) {
+                return 0;
+            }
             if (position >= currentLine.length) {
                 String line = BrowserIO.jsReadLine();
                 if (line == null) {
@@ -61,7 +76,10 @@ public class BrowserMain {
                 currentLine = (line + "\n").getBytes(StandardCharsets.UTF_8);
                 position = 0;
             }
-            return currentLine[position++] & 0xFF;
+            int toCopy = Math.min(currentLine.length - position, len);
+            System.arraycopy(currentLine, position, b, off, toCopy);
+            position += toCopy;
+            return toCopy;
         }
     }
 }
