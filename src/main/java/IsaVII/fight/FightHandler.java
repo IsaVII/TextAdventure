@@ -6,6 +6,7 @@ import IsaVII.character.Skills;
 import IsaVII.enemies.Enemy;
 import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.Skills_Base;
+import IsaVII.ui.IO;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 

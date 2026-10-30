@@ -2,6 +2,7 @@ package IsaVII.character;
 
 import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.Skills_Base;
+import IsaVII.ui.IO;
 
 import java.util.ArrayList;
 

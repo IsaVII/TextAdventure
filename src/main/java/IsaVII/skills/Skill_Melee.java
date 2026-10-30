@@ -1,5 +1,6 @@
 package IsaVII.skills;
 
+import IsaVII.ui.IO;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 

@@ -5,6 +5,7 @@ import IsaVII.character.MainCharacter;
 import IsaVII.fight.FightManager;
 import IsaVII.inventory.InventoryHandler;
 import IsaVII.localization.LocalizationManager;
+import IsaVII.ui.IO;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 
