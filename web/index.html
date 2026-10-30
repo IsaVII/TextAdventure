@@ -58,7 +58,7 @@
   }
 
   async function main() {
-    await cheerpjInit();
+    await cheerpjInit({ version: 17 });
     term.write("Starting game...\r\n");
 
     // /app/ maps to the site's domain root, not the folder index.html lives in -
