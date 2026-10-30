@@ -152,7 +152,7 @@ public class FightHandler {
             enemy = chooseEnemyToAttack(skillBase);
 
         } else {
-            enemy = enemies.getFirst();
+            enemy = enemies.get(0);
         }
 
         dealDamageToSingleEnemy(skillBase, enemy);
