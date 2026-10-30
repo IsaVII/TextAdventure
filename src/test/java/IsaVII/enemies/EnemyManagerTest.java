@@ -1,5 +1,6 @@
 package IsaVII.enemies;
 
+import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.SkillManager;
 import IsaVII.world.AreaType;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +17,7 @@ class EnemyManagerTest {
 
     @BeforeAll
     static void initEnemyManager() {
+        new LocalizationManager();
         new SkillManager();
         new EnemyManager();
     }

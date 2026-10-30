@@ -1,7 +1,9 @@
 package IsaVII.world;
 
 import IsaVII.Objects.WorldObject;
+import IsaVII.localization.LocalizationManager;
 import com.google.gson.Gson;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class EnvironmentNodeTest {
 
     private static final Gson GSON = new Gson();
+
+    @BeforeAll
+    static void initLocalizationManager() {
+        new LocalizationManager();
+    }
 
     @Test
     @DisplayName("A node deserializes its area type, art path, description and monster flag")

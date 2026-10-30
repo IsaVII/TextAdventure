@@ -2,6 +2,7 @@ package IsaVII.Objects;
 
 import IsaVII.Objects.Items.Item;
 import IsaVII.Objects.Items.ItemType;
+import IsaVII.localization.LocalizationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ class ItemManagerTest {
 
     @BeforeAll
     static void initItemManager() {
+        new LocalizationManager();
         new ItemManager();
     }
 

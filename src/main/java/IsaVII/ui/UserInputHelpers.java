@@ -1,5 +1,6 @@
 package IsaVII.ui;
 
+import IsaVII.localization.LocalizationManager;
 import IsaVII.world.Direction;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class UserInputHelpers {
         boolean validInput = false;
 
         while (!validInput) {
-            String userInput = IO.readln(message + " (yes/no): ");
+            String userInput = IO.readln(LocalizationManager.getText("input.yes_no_prompt", message));
 
             if (userInput.equalsIgnoreCase("yes") ||
                     userInput.equalsIgnoreCase("y") ||
@@ -22,7 +23,7 @@ public class UserInputHelpers {
                 choice = userInput.toLowerCase();
                 validInput = true;
             } else {
-                IO.println("Invalid input. Please enter 'yes' or 'no'.");
+                IO.println(LocalizationManager.getText("input.yes_no_invalid"));
             }
 
         }
@@ -46,7 +47,7 @@ public class UserInputHelpers {
             }
 
             if (!validInput) {
-                IO.println("Invalid choice. Please enter a number between " + minIncl + " and " + maxIncl + ".");
+                IO.println(LocalizationManager.getText("input.menu_number_invalid", minIncl, maxIncl));
             }
         }
         return menuNumber;
@@ -54,7 +55,7 @@ public class UserInputHelpers {
 
     public static Direction getDirectionFromUser(Set<Direction> allowedDirections) {
         while (true) {
-            String userInput = IO.readln("Where do you want to go?: ");
+            String userInput = IO.readln(LocalizationManager.getText("input.direction_prompt"));
 
             try {
                 Direction direction = Direction.valueOf(userInput.trim().toUpperCase());
@@ -64,7 +65,7 @@ public class UserInputHelpers {
             } catch (IllegalArgumentException e) {
             }
 
-            IO.println("Invalid direction. Please choose one of: " + describeDirections(allowedDirections));
+            IO.println(LocalizationManager.getText("input.direction_invalid", describeDirections(allowedDirections)));
         }
     }
 
@@ -72,7 +73,7 @@ public class UserInputHelpers {
     // so the caller can tell the two apart without a second lookup.
     public static String getDirectionOrActionFromUser(Set<Direction> allowedDirections, List<String> availableActions) {
         while (true) {
-            String userInput = IO.readln("What do you want to do?: ").trim();
+            String userInput = IO.readln(LocalizationManager.getText("input.action_prompt")).trim();
 
             for (String action : availableActions) {
                 if (userInput.equalsIgnoreCase(action)) {
@@ -88,7 +89,7 @@ public class UserInputHelpers {
             } catch (IllegalArgumentException e) {
             }
 
-            IO.println("Invalid input. Please choose one of: " + describeOptions(allowedDirections, availableActions));
+            IO.println(LocalizationManager.getText("input.action_invalid", describeOptions(allowedDirections, availableActions)));
         }
     }
 

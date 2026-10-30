@@ -1,5 +1,6 @@
 package IsaVII.character;
 
+import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.Skills_Base;
 
 import java.util.ArrayList;
@@ -27,8 +28,11 @@ public class Skills {
     }
 
     public void printSkillList() {
-        IO.println("Skills:");
-        IO.println(String.format("\t\t%-17s %-14s %-17s", "Skill", "Damage", "Cooldown"));
+        IO.println(LocalizationManager.getText("skills.list.title"));
+        IO.println(String.format("\t\t%-17s %-14s %-17s",
+                LocalizationManager.getText("skills.list.column.skill"),
+                LocalizationManager.getText("skills.list.column.damage"),
+                LocalizationManager.getText("skills.list.column.cooldown")));
         
         int counter = 1;
         for (Skill skill :  skills) {

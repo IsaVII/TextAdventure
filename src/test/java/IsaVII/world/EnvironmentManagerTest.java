@@ -2,6 +2,7 @@ package IsaVII.world;
 
 import IsaVII.Objects.Items.ItemType;
 import IsaVII.Objects.WorldObject;
+import IsaVII.localization.LocalizationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ class EnvironmentManagerTest {
 
     @BeforeAll
     static void loadEnvironmentManager() {
+        new LocalizationManager();
         environmentManager = new EnvironmentManager();
     }
 

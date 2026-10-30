@@ -1,5 +1,6 @@
 package IsaVII.skills;
 
+import IsaVII.localization.LocalizationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ class SkillManagerTest {
 
     @BeforeAll
     static void initSkillManager() {
+        new LocalizationManager();
         new SkillManager();
     }
 

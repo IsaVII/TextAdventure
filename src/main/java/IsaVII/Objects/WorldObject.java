@@ -2,6 +2,7 @@ package IsaVII.Objects;
 
 import IsaVII.Objects.Items.Item;
 import IsaVII.Objects.Items.ItemStack;
+import IsaVII.localization.LocalizationManager;
 
 import java.util.List;
 
@@ -25,13 +26,11 @@ public class WorldObject {
     }
 
     public String getName() {
-        return objectType.name().toLowerCase();
+        return LocalizationManager.getText("object." + objectType.name().toLowerCase() + ".name");
     }
 
     public String getActionVerb() {
-        return switch (objectType) {
-            case CHEST -> "open";
-        };
+        return LocalizationManager.getText("object." + objectType.name().toLowerCase() + ".action");
     }
 
     public String getCommand() {
@@ -40,25 +39,25 @@ public class WorldObject {
 
     public String interact(Inventory inventory) {
         if (opened) {
-            return "The " + getName() + " is already empty.";
+            return LocalizationManager.getText("worldobject.already_empty", getName());
         }
 
         opened = true;
 
         if (contents == null || contents.isEmpty()) {
-            return "You " + getActionVerb() + " the " + getName() + ", but it's empty.";
+            return LocalizationManager.getText("worldobject.opened_empty", getName());
         }
 
-        StringBuilder sb = new StringBuilder("You " + getActionVerb() + " the " + getName() + " and find: ");
+        StringBuilder loot = new StringBuilder();
         for (int i = 0; i < contents.size(); i++) {
             ItemStack stack = contents.get(i);
             Item item = ItemManager.getItem(stack.getItemType());
             inventory.addItem(item, stack.getQuantity());
             if (i > 0) {
-                sb.append(", ");
+                loot.append(", ");
             }
-            sb.append(stack.getQuantity()).append("x ").append(item.getName());
+            loot.append(stack.getQuantity()).append("x ").append(item.getName());
         }
-        return sb.toString();
+        return LocalizationManager.getText("worldobject.opened_found", getName(), loot);
     }
 }

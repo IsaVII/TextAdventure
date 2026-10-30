@@ -2,6 +2,7 @@ package IsaVII.Objects;
 
 import IsaVII.Objects.Items.Item;
 import IsaVII.Objects.Items.ItemType;
+import IsaVII.localization.LocalizationManager;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,7 @@ class WorldObjectTest {
 
     @BeforeAll
     static void initItemManager() {
+        new LocalizationManager();
         new ItemManager();
     }
 

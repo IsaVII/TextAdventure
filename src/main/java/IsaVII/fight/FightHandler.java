@@ -4,6 +4,7 @@ import IsaVII.character.MainCharacter;
 import IsaVII.character.Skill;
 import IsaVII.character.Skills;
 import IsaVII.enemies.Enemy;
+import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.Skills_Base;
 import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
@@ -23,11 +24,11 @@ public class FightHandler {
     }
 
     public void startFight() {
-        IO.println("You are being attacked");
+        IO.println(LocalizationManager.getText("fight.being_attacked"));
 
-        //Chance that it's a surprise encounter  
+        //Chance that it's a surprise encounter
         if (Math.random() < 0.9) {
-            IO.println(UiHelpers.color("It's a surprise encounter! The enemies get the first attack!", UiHelpers.RED));
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.surprise_encounter"), UiHelpers.RED));
             printEnemies();
             enemyAttacks();
             printPlayerHealth();
@@ -46,22 +47,22 @@ public class FightHandler {
     }
 
     private void printPlayerHealth() {
-        IO.println("Your health: " +   mainCharacter.printHealth());
+        IO.println(LocalizationManager.getText("fight.your_health", mainCharacter.printHealth()));
     }
 
     private void enemyAttacks() {
-          
+
         for (Enemy enemy : enemies) {
             Skill skill = enemy.getRandomAttackSkill();
-            
+
             if (skill == null) {
-                IO.println(UiHelpers.color(enemy.getName() + " has no skills to attack with!", UiHelpers.RED));
+                IO.println(UiHelpers.color(LocalizationManager.getText("fight.enemy_no_skills", enemy.getName()), UiHelpers.RED));
                 continue;
             }
-            
+
             Skills_Base skillBase = skill.getSkill();
             mainCharacter.receiveDamage(skillBase.getDamage());
-            IO.println(UiHelpers.color(enemy.getName() + " used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to you!", UiHelpers.RED));
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.enemy_attack", enemy.getName(), skillBase.getName(), skillBase.getDamage()), UiHelpers.RED));
         }
     }
 
@@ -71,7 +72,7 @@ public class FightHandler {
 
         printEnemies();
         printFightMenu();
-        int choice = UserInputHelpers.getMenuNumberFromUserInRange("What do you want to do?", 1, 3);
+        int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("fight.menu.prompt"), 1, 3);
 
         switch (choice) {
             case 1:
@@ -82,7 +83,7 @@ public class FightHandler {
                 //Todo:: handle items
                 break;
             case 3:
-                IO.println(UiHelpers.color("You fled from the fight!", UiHelpers.YELLOW));
+                IO.println(UiHelpers.color(LocalizationManager.getText("fight.fled"), UiHelpers.YELLOW));
                 isFighting = false;
                 break;
         }
@@ -90,7 +91,7 @@ public class FightHandler {
         mainCharacter.roundEnded();
 
         if (enemies.isEmpty()) {
-            IO.println("You have defeated all enemies!");
+            IO.println(LocalizationManager.getText("fight.victory"));
             isFighting = false;
         }
 
@@ -98,15 +99,15 @@ public class FightHandler {
     }
 
     private void printFightMenu() {
-        IO.println(String.format("%-20s\t | %s", "Fight Menu:", "Your health: " + mainCharacter.printHealth()));
-        IO.println(String.format("\t%-20s |", "1. Attack"));
-        IO.println(String.format("\t%-20s |", "2. Use Item"));
-        IO.println(String.format("\t%-20s |", "3. Flee"));
+        IO.println(String.format("%-20s\t | %s", LocalizationManager.getText("fight.menu.title"), LocalizationManager.getText("fight.your_health", mainCharacter.printHealth())));
+        IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.attack")));
+        IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.use_item")));
+        IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.flee")));
     }
 
     public void chooseSkill() {
         UiHelpers.printLine(true);
-        IO.println("You chose to attack!");
+        IO.println(LocalizationManager.getText("fight.chose_attack"));
 
         Skills skills = mainCharacter.getSkills();
 
@@ -115,11 +116,11 @@ public class FightHandler {
         int skillCount = skills.getSkillCount();
 
         while (true) {
-            int choice = UserInputHelpers.getMenuNumberFromUserInRange("Which skill do you want to use?", 1, skillCount);
+            int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("fight.skill.prompt"), 1, skillCount);
             Skill selectedSkill = skills.getSkillByIndex(choice - 1);
 
             if (selectedSkill.isOnCooldown()) {
-                IO.println("This skill is on cooldown for " + selectedSkill.getCurrentCooldown() + " more rounds.\n");
+                IO.println(LocalizationManager.getText("fight.skill.cooldown", selectedSkill.getCurrentCooldown()) + "\n");
             } else {
                 handleSkillUsage(selectedSkill);
                 return;
@@ -158,7 +159,7 @@ public class FightHandler {
 
     private void dealDamageToSingleEnemy(Skills_Base skillBase, Enemy enemy) {
         enemy.receiveDamage(skillBase.getDamage());
-        IO.println(UiHelpers.color("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to " + enemy.getName() + "!", UiHelpers.BLUE));
+        IO.println(UiHelpers.color(LocalizationManager.getText("fight.player_attack_single", skillBase.getName(), skillBase.getDamage(), enemy.getName()), UiHelpers.BLUE));
     }
 
     private void attackSeveralEnemies(Skills_Base skillBase) {
@@ -169,17 +170,17 @@ public class FightHandler {
             enemy.receiveDamage(skillBase.getDamage());
         }
 
-        IO.println(UiHelpers.color("You used " + skillBase.getName() + " and dealt " + skillBase.getDamage() + " damage to " + maxTargets + " targets!", UiHelpers.BLUE));
+        IO.println(UiHelpers.color(LocalizationManager.getText("fight.player_attack_aoe", skillBase.getName(), skillBase.getDamage(), maxTargets), UiHelpers.BLUE));
     }
 
 
     private Enemy chooseEnemyToAttack(Skills_Base skillBase) {
-        IO.println("Select an enemy to attack:");
+        IO.println(LocalizationManager.getText("fight.select_enemy_label"));
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
-            IO.println("\t" + (i + 1) + ". " + enemy.getName() + " with health: " + enemy.getHealth());
+            IO.println("\t" + LocalizationManager.getText("fight.enemy_list_item_numbered", i + 1, enemy.getName(), enemy.getHealth()));
         }
-        int choice = UserInputHelpers.getMenuNumberFromUserInRange("Which enemy do you want to attack?", 1, enemies.size());
+        int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("fight.select_enemy_prompt"), 1, enemies.size());
         return enemies.get(choice - 1);
     }
 
@@ -193,16 +194,16 @@ public class FightHandler {
         }
 
         for (Enemy deadEnemy : deadEnemies) {
-            IO.println(UiHelpers.color(deadEnemy.getName() + " has been defeated!", UiHelpers.GREEN));
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.enemy_defeated", deadEnemy.getName()), UiHelpers.GREEN));
             enemies.remove(deadEnemy);
         }
     }
 
     private void printEnemies() {
         UiHelpers.printLine(true);
-        IO.println("Enemies:");
+        IO.println(LocalizationManager.getText("fight.enemies_label"));
         for (Enemy enemy : enemies) {
-            IO.println("\t" + enemy.getName() + " with health: " + enemy.getHealth());
+            IO.println("\t" + LocalizationManager.getText("fight.enemy_list_item", enemy.getName(), enemy.getHealth()));
         }
         UiHelpers.printLine(true);
 

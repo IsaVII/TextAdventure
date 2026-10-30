@@ -3,6 +3,7 @@ package IsaVII.enemies;
 import IsaVII.character.Skills;
 import IsaVII.enemies.spawn.AreaSpawnConfig;
 import IsaVII.enemies.spawn.EnemySpawnEntry;
+import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.SkillManager;
 import IsaVII.skills.SkillName;
 import IsaVII.world.AreaType;
@@ -42,13 +43,13 @@ public class EnemyManager {
 
 
     private void createWolf() {
-        Enemy wolf = new Enemy("Wolf", 10);
+        Enemy wolf = new Enemy(LocalizationManager.getText("enemy.wolf.name"), 10);
         wolf.getSkills().addSkill(SkillManager.getSkill(SkillName.BITE));
         enemies.put(EnemyType.Wolf, wolf);
     }
 
     private void createBoar() {
-        Enemy boar = new Enemy("Boar", 30);
+        Enemy boar = new Enemy(LocalizationManager.getText("enemy.boar.name"), 30);
         Skills skills = boar.getSkills();
         skills.addSkill(SkillManager.getSkill(SkillName.HEAVY_STRIKE));
         skills.addSkill(SkillManager.getSkill(SkillName.BITE));

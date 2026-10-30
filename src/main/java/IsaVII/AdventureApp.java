@@ -18,9 +18,9 @@ public class AdventureApp {
     private static MainCharacter mainCharacter;
 
     void main() {
+        localizationManager = new LocalizationManager();
         skillManager = new SkillManager();
         itemManager = new ItemManager();
-        localizationManager = new LocalizationManager();
         fightManager = new FightManager();
         environmentManager = new EnvironmentManager();
         
