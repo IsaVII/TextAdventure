@@ -39,6 +39,8 @@
 
   "enemy.wolf.name": "Wolf",
   "enemy.boar.name": "Wildschwein",
+  "enemy.goblin.name": "Goblin",
+  "enemy.vampire.name": "Vampir",
 
   "skills.list.title": "Fähigkeiten:",
   "skills.list.column.skill": "Fähigkeit",
@@ -68,6 +70,8 @@
   "fight.enemy_defeated": "%s wurde besiegt!",
   "fight.enemies_label": "Gegner:",
   "fight.enemy_list_item": "%s mit %d Gesundheit",
+  "fight.loot.item": "Du hast %d x %s gefunden!",
+  "fight.loot.coins": "Du hast %d Münzen gefunden!",
 
   "input.yes_no_prompt": "%s (ja/nein): ",
   "input.yes_no_invalid": "Ungültige Eingabe. Bitte gib 'ja' oder 'nein' ein.",

@@ -3,13 +3,13 @@ package IsaVII.enemies.spawn;
 import java.util.List;
 
 public class AreaSpawnConfig {
-    private double healthMultiplier;
+    private double difficultyMultiplier;
     private int minGroupSize;
     private int maxGroupSize;
     private List<EnemySpawnEntry> enemies;
 
-    public double getHealthMultiplier() {
-        return healthMultiplier;
+    public double getDifficultyMultiplier() {
+        return difficultyMultiplier;
     }
 
     public int getMinGroupSize() {

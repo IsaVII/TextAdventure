@@ -1,6 +1,5 @@
 package IsaVII.enemies;
 
-import IsaVII.character.Skills;
 import IsaVII.enemies.spawn.AreaSpawnConfig;
 import IsaVII.enemies.spawn.EnemySpawnEntry;
 import IsaVII.localization.LocalizationManager;
@@ -22,14 +21,13 @@ import java.util.Map;
 public class EnemyManager {
 
     private static final String SPAWN_CONFIG_PATH = "enemies/enemy_spawns.json";
+    private static final String ENEMY_DATA_PATH = "enemies/enemy_data.json";
 
     private static HashMap<EnemyType, Enemy> enemies;
     private static Map<AreaType, AreaSpawnConfig> spawnConfig;
 
     public EnemyManager() {
-        enemies = new HashMap<>();
-        createWolf();
-        createBoar();
+        enemies = loadEnemies();
         spawnConfig = loadSpawnConfig();
     }
 
@@ -41,20 +39,38 @@ public class EnemyManager {
         return null;
     }
 
+    private HashMap<EnemyType, Enemy> loadEnemies() {
+        HashMap<EnemyType, Enemy> result = new HashMap<>();
+        Map<EnemyType, EnemyData> enemyData = loadEnemyData();
 
-    private void createWolf() {
-        Enemy wolf = new Enemy(LocalizationManager.getText("enemy.wolf.name"), 10);
-        wolf.getSkills().addSkill(SkillManager.getSkill(SkillName.BITE));
-        enemies.put(EnemyType.Wolf, wolf);
+        for (Map.Entry<EnemyType, EnemyData> entry : enemyData.entrySet()) {
+            EnemyType type = entry.getKey();
+            EnemyData data = entry.getValue();
+
+            String name = LocalizationManager.getText("enemy." + type.name().toLowerCase() + ".name");
+            Enemy enemy = new Enemy(name, data.getHealth(), data.getWeakness(), data.getDrops());
+
+            if (data.getSkills() != null) {
+                for (SkillName skillName : data.getSkills()) {
+                    enemy.getSkills().addSkill(SkillManager.getSkill(skillName));
+                }
+            }
+
+            result.put(type, enemy);
+        }
+
+        return result;
     }
 
-    private void createBoar() {
-        Enemy boar = new Enemy(LocalizationManager.getText("enemy.boar.name"), 30);
-        Skills skills = boar.getSkills();
-        skills.addSkill(SkillManager.getSkill(SkillName.HEAVY_STRIKE));
-        skills.addSkill(SkillManager.getSkill(SkillName.BITE));
-
-        enemies.put(EnemyType.Boar, boar);
+    private Map<EnemyType, EnemyData> loadEnemyData() {
+        try (Reader reader = new InputStreamReader(
+                getClass().getClassLoader().getResourceAsStream(ENEMY_DATA_PATH),
+                StandardCharsets.UTF_8)) {
+            Type mapType = new TypeToken<Map<EnemyType, EnemyData>>() {}.getType();
+            return new Gson().fromJson(reader, mapType);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load enemy data: " + ENEMY_DATA_PATH, e);
+        }
     }
 
     private Map<AreaType, AreaSpawnConfig> loadSpawnConfig() {
@@ -85,7 +101,7 @@ public class EnemyManager {
             }
             Enemy copy = getEnemyCopy(type);
             if (copy != null) {
-                spawnedEnemies.add(new Enemy(copy, config.getHealthMultiplier()));
+                spawnedEnemies.add(new Enemy(copy, config.getDifficultyMultiplier()));
             }
         }
 

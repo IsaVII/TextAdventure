@@ -2,6 +2,7 @@ package IsaVII.world;
 
 import IsaVII.Objects.WorldObject;
 import IsaVII.character.MainCharacter;
+import IsaVII.config.GameConfig;
 import IsaVII.fight.FightManager;
 import IsaVII.inventory.InventoryHandler;
 import IsaVII.localization.LocalizationManager;
@@ -42,7 +43,7 @@ public class EnvironmentHandler {
             }
 
             //check for random monster attacks
-            if (node.isMonsterAttacksPossible() && Math.random() < 0.01) { //todo:: make this chance configurable
+            if (node.isMonsterAttacksPossible() && Math.random() < GameConfig.ENCOUNTER_CHANCE) { 
                 IO.println(UiHelpers.color(LocalizationManager.getText("environment.danger_sensed"), UiHelpers.RED));
                 fightManager.initializeFight(node.getAreaType());
             }

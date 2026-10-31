@@ -39,6 +39,8 @@
 
   "enemy.wolf.name": "Varg",
   "enemy.boar.name": "Vildsvin",
+  "enemy.goblin.name": "Vätte",
+  "enemy.vampire.name": "Vampyr",
 
   "skills.list.title": "Förmågor:",
   "skills.list.column.skill": "Förmåga",
@@ -68,6 +70,8 @@
   "fight.enemy_defeated": "%s har blivit besegrad!",
   "fight.enemies_label": "Fiender:",
   "fight.enemy_list_item": "%s med %d hälsa",
+  "fight.loot.item": "Du hittade %d x %s!",
+  "fight.loot.coins": "Du hittade %d mynt!",
 
   "input.yes_no_prompt": "%s (ja/nej): ",
   "input.yes_no_invalid": "Ogiltig inmatning. Skriv 'ja' eller 'nej'.",

@@ -1,9 +1,14 @@
 package IsaVII.fight;
 
+import IsaVII.Objects.ItemManager;
+import IsaVII.Objects.Items.Item;
+import IsaVII.Objects.Items.ItemStack;
 import IsaVII.character.MainCharacter;
 import IsaVII.character.Skill;
 import IsaVII.character.Skills;
+import IsaVII.config.GameConfig;
 import IsaVII.enemies.Enemy;
+import IsaVII.enemies.loot.LootResult;
 import IsaVII.localization.LocalizationManager;
 import IsaVII.skills.Skills_Base;
 import IsaVII.ui.IO;
@@ -28,7 +33,7 @@ public class FightHandler {
         IO.println(LocalizationManager.getText("fight.being_attacked"));
 
         //Chance that it's a surprise encounter
-        if (Math.random() < 0.9) {
+        if (Math.random() < GameConfig.ENCOUNTER_SURPRISE_CHANCE) {
             IO.println(UiHelpers.color(LocalizationManager.getText("fight.surprise_encounter"), UiHelpers.RED));
             printEnemies();
             enemyAttacks();
@@ -196,7 +201,26 @@ public class FightHandler {
 
         for (Enemy deadEnemy : deadEnemies) {
             IO.println(UiHelpers.color(LocalizationManager.getText("fight.enemy_defeated", deadEnemy.getName()), UiHelpers.GREEN));
+            grantLoot(deadEnemy);
             enemies.remove(deadEnemy);
+        }
+    }
+
+    private void grantLoot(Enemy deadEnemy) {
+        LootResult loot = deadEnemy.rollLoot();
+        if (loot.isEmpty()) {
+            return;
+        }
+
+        for (ItemStack itemStack : loot.getItems()) {
+            Item item = ItemManager.getItem(itemStack.getItemType());
+            mainCharacter.getInventory().addItem(item, itemStack.getQuantity());
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.loot.item", itemStack.getQuantity(), item.getName()), UiHelpers.GREEN));
+        }
+
+        if (loot.getCoins() > 0) {
+            mainCharacter.addCoins(loot.getCoins());
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.loot.coins", loot.getCoins()), UiHelpers.GREEN));
         }
     }
 

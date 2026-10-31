@@ -79,6 +79,10 @@ public class MainCharacter implements Health_Interface {
         return coins;
     }
 
+    public void addCoins(int amount) {
+        coins += amount;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
