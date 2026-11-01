@@ -72,6 +72,10 @@
   "fight.enemy_list_item": "%s with health: %d",
   "fight.loot.item": "You found %d x %s!",
   "fight.loot.coins": "You found %d coins!",
+  "fight.item.none": "You have no usable items.",
+  "fight.item.prompt": "Which item do you want to use?",
+  "fight.item.not_usable": "You can't use that item in a fight.",
+  "fight.item.success": "You used %s.",
 
   "input.yes_no_prompt": "%s (yes/no): ",
   "input.yes_no_invalid": "Invalid input. Please enter 'yes' or 'no'.",

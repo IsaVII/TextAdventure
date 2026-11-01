@@ -72,6 +72,10 @@
   "fight.enemy_list_item": "%s mit %d Gesundheit",
   "fight.loot.item": "Du hast %d x %s gefunden!",
   "fight.loot.coins": "Du hast %d Münzen gefunden!",
+  "fight.item.none": "Du hast keine verwendbaren Gegenstände.",
+  "fight.item.prompt": "Welchen Gegenstand möchtest du benutzen?",
+  "fight.item.not_usable": "Diesen Gegenstand kannst du im Kampf nicht benutzen.",
+  "fight.item.success": "Du hast %s benutzt.",
 
   "input.yes_no_prompt": "%s (ja/nein): ",
   "input.yes_no_invalid": "Ungültige Eingabe. Bitte gib 'ja' oder 'nein' ein.",

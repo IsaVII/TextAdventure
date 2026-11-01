@@ -2,6 +2,7 @@ package IsaVII.inventory;
 
 import IsaVII.Objects.Inventory;
 import IsaVII.Objects.Items.Item;
+import IsaVII.Objects.Items.ItemEffects;
 import IsaVII.character.MainCharacter;
 import IsaVII.localization.LocalizationManager;
 import IsaVII.ui.IO;
@@ -13,8 +14,6 @@ import java.util.List;
 
 // Entered from exploration via the always-available "inventory" action. Never triggers a fight.
 public class InventoryHandler {
-
-    private static final int HEALTH_POTION_HEAL_AMOUNT = 20;
 
     private static final String BACKPACK_ART = """
                 ______________
@@ -82,7 +81,7 @@ public class InventoryHandler {
 
         Item item = chooseItem(LocalizationManager.getText("inventory.use.prompt"), items);
 
-        applyItemEffect(item);
+        ItemEffects.apply(item, mainCharacter);
         inventory.removeItem(item, 1);
         IO.println(UiHelpers.color(LocalizationManager.getText("inventory.use.success", item.getName()), UiHelpers.GREEN));
     }
@@ -102,11 +101,5 @@ public class InventoryHandler {
     private Item chooseItem(String prompt, List<Item> items) {
         int choice = UserInputHelpers.getMenuNumberFromUserInRange(prompt, 1, items.size());
         return items.get(choice - 1);
-    }
-
-    private void applyItemEffect(Item item) {
-        switch (item.getItemType()) {
-            case HEALTH_POTION -> mainCharacter.addHealth(HEALTH_POTION_HEAL_AMOUNT);
-        }
     }
 }

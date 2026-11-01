@@ -1,6 +1,7 @@
 package IsaVII.Objects;
 
 import IsaVII.Objects.Items.Item;
+import IsaVII.Objects.Items.ItemTag;
 import IsaVII.Objects.Items.ItemType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InventoryTest {
 
-    private final Item healthPotion = new Item(ItemType.HEALTH_POTION, "Health Potion", "Restores health.");
+    private final Item healthPotion = new Item(ItemType.HEALTH_POTION, ItemTag.CONSUMABLE, "Health Potion", "Restores health.");
 
     @Test
     @DisplayName("A new inventory has no quantity for an item it has never seen")
@@ -46,7 +47,7 @@ class InventoryTest {
         // Item has no overridden equals/hashCode, so inventory slots are keyed by instance identity.
         // This is why ItemManager must hand out a single shared instance per ItemType.
         Inventory inventory = new Inventory();
-        Item anotherHealthPotionInstance = new Item(ItemType.HEALTH_POTION, "Health Potion", "Restores health.");
+        Item anotherHealthPotionInstance = new Item(ItemType.HEALTH_POTION, ItemTag.CONSUMABLE, "Health Potion", "Restores health.");
 
         inventory.addItem(healthPotion, 1);
         inventory.addItem(anotherHealthPotionInstance, 4);

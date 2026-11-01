@@ -1,8 +1,11 @@
 package IsaVII.fight;
 
+import IsaVII.Objects.Inventory;
 import IsaVII.Objects.ItemManager;
 import IsaVII.Objects.Items.Item;
+import IsaVII.Objects.Items.ItemEffects;
 import IsaVII.Objects.Items.ItemStack;
+import IsaVII.Objects.Items.ItemTag;
 import IsaVII.character.MainCharacter;
 import IsaVII.character.Skill;
 import IsaVII.character.Skills;
@@ -16,6 +19,7 @@ import IsaVII.ui.UiHelpers;
 import IsaVII.ui.UserInputHelpers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FightHandler {
 
@@ -80,13 +84,15 @@ public class FightHandler {
         printFightMenu();
         int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("fight.menu.prompt"), 1, 3);
 
+        boolean turnUsed = true;
+
         switch (choice) {
             case 1:
                 chooseSkill();
 
                 break;
             case 2:
-                //Todo:: handle items
+                turnUsed = useItem();
                 break;
             case 3:
                 IO.println(UiHelpers.color(LocalizationManager.getText("fight.fled"), UiHelpers.YELLOW));
@@ -94,7 +100,9 @@ public class FightHandler {
                 break;
         }
 
-        mainCharacter.roundEnded();
+        if (turnUsed) {
+            mainCharacter.roundEnded();
+        }
 
         if (enemies.isEmpty()) {
             IO.println(LocalizationManager.getText("fight.victory"));
@@ -109,6 +117,41 @@ public class FightHandler {
         IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.attack")));
         IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.use_item")));
         IO.println(String.format("\t%-20s |", LocalizationManager.getText("fight.menu.flee")));
+    }
+
+    private boolean useItem() {
+        Inventory inventory = mainCharacter.getInventory();
+        List<Item> items = new ArrayList<>(inventory.getItems().keySet());
+
+        if (items.stream().noneMatch(item -> item.getItemTag() == ItemTag.CONSUMABLE)) {
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.item.none"), UiHelpers.YELLOW));
+            return false;
+        }
+
+        while (true) {
+            printItemsForFight(inventory, items);
+            int choice = UserInputHelpers.getMenuNumberFromUserInRange(LocalizationManager.getText("fight.item.prompt"), 1, items.size());
+            Item selected = items.get(choice - 1);
+
+            if (selected.getItemTag() != ItemTag.CONSUMABLE) {
+                IO.println(UiHelpers.color(LocalizationManager.getText("fight.item.not_usable"), UiHelpers.YELLOW));
+                continue;
+            }
+
+            ItemEffects.apply(selected, mainCharacter);
+            inventory.removeItem(selected, 1);
+            IO.println(UiHelpers.color(LocalizationManager.getText("fight.item.success", selected.getName()), UiHelpers.GREEN));
+            return true;
+        }
+    }
+
+    private void printItemsForFight(Inventory inventory, List<Item> items) {
+        IO.println(LocalizationManager.getText("inventory.title"));
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            String line = String.format("\t%d. %-20s x%-3d %s", i + 1, item.getName(), inventory.getQuantity(item), item.getDescription());
+            IO.println(item.getItemTag() == ItemTag.CONSUMABLE ? line : UiHelpers.color(line, UiHelpers.GREY));
+        }
     }
 
     public void chooseSkill() {

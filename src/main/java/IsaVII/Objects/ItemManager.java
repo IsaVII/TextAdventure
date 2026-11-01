@@ -1,6 +1,7 @@
 package IsaVII.Objects;
 
 import IsaVII.Objects.Items.Item;
+import IsaVII.Objects.Items.ItemTag;
 import IsaVII.Objects.Items.ItemType;
 import IsaVII.localization.LocalizationManager;
 
@@ -13,7 +14,7 @@ public class ItemManager {
 
     public ItemManager() {
         itemMap = new HashMap<>();
-        itemMap.put(ItemType.HEALTH_POTION, new Item(ItemType.HEALTH_POTION,
+        itemMap.put(ItemType.HEALTH_POTION, new Item(ItemType.HEALTH_POTION, ItemTag.CONSUMABLE,
                 LocalizationManager.getText("item.health_potion.name"),
                 LocalizationManager.getText("item.health_potion.description")));
     }
