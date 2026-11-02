@@ -53,6 +53,10 @@ public class UserInputHelpers {
         return menuNumber;
     }
 
+    public static void waitForContinue() {
+        IO.readln(LocalizationManager.getText("input.continue_prompt"));
+    }
+
     public static Direction getDirectionFromUser(Set<Direction> allowedDirections) {
         while (true) {
             String userInput = IO.readln(LocalizationManager.getText("input.direction_prompt"));

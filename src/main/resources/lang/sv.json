@@ -83,5 +83,6 @@
   "input.direction_invalid": "Ogiltig riktning. Välj en av: %s",
   "input.action_prompt": "Vad vill du göra?: ",
   "input.action_invalid": "Ogiltig inmatning. Välj en av: %s",
-  "input.menu_number_invalid": "Ogiltigt val. Ange ett tal mellan %d och %d."
+  "input.menu_number_invalid": "Ogiltigt val. Ange ett tal mellan %d och %d.",
+  "input.continue_prompt": "Tryck på Enter för att fortsätta..."
 }

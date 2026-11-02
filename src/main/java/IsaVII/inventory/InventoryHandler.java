@@ -76,6 +76,7 @@ public class InventoryHandler {
     private void useItem(Inventory inventory, List<Item> items) {
         if (items.isEmpty()) {
             IO.println(UiHelpers.color(LocalizationManager.getText("inventory.use.none"), UiHelpers.YELLOW));
+            UserInputHelpers.waitForContinue();
             return;
         }
 
@@ -84,11 +85,13 @@ public class InventoryHandler {
         ItemEffects.apply(item, mainCharacter);
         inventory.removeItem(item, 1);
         IO.println(UiHelpers.color(LocalizationManager.getText("inventory.use.success", item.getName()), UiHelpers.GREEN));
+        UserInputHelpers.waitForContinue();
     }
 
     private void discardItem(Inventory inventory, List<Item> items) {
         if (items.isEmpty()) {
             IO.println(UiHelpers.color(LocalizationManager.getText("inventory.remove.none"), UiHelpers.YELLOW));
+            UserInputHelpers.waitForContinue();
             return;
         }
 
@@ -96,6 +99,7 @@ public class InventoryHandler {
 
         inventory.removeItem(item, 1);
         IO.println(UiHelpers.color(LocalizationManager.getText("inventory.remove.success", item.getName()), UiHelpers.YELLOW));
+        UserInputHelpers.waitForContinue();
     }
 
     private Item chooseItem(String prompt, List<Item> items) {

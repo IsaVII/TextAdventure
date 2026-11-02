@@ -83,5 +83,6 @@
   "input.direction_invalid": "Ungültige Richtung. Bitte wähle eine von: %s",
   "input.action_prompt": "Was möchtest du tun?: ",
   "input.action_invalid": "Ungültige Eingabe. Bitte wähle eine von: %s",
-  "input.menu_number_invalid": "Ungültige Auswahl. Bitte gib eine Zahl zwischen %d und %d ein."
+  "input.menu_number_invalid": "Ungültige Auswahl. Bitte gib eine Zahl zwischen %d und %d ein.",
+  "input.continue_prompt": "Drücke Enter, um fortzufahren..."
 }

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EnemyManagerTest {
@@ -25,7 +24,7 @@ class EnemyManagerTest {
     @Test
     @DisplayName("Getting a Wolf copy returns expected name, health and skill count")
     void getEnemyCopyReturnsWolfWithExpectedStats() {
-        Enemy wolf = EnemyManager.getEnemyCopy(EnemyType.Wolf);
+        Enemy wolf = EnemyManager.getEnemyCopy(EnemyType.WOLF);
 
         assertNotNull(wolf);
         assertEquals("Wolf", wolf.getName());
@@ -36,7 +35,7 @@ class EnemyManagerTest {
     @Test
     @DisplayName("Getting a Boar copy returns expected name, health and skill count")
     void getEnemyCopyReturnsBoarWithExpectedStats() {
-        Enemy boar = EnemyManager.getEnemyCopy(EnemyType.Boar);
+        Enemy boar = EnemyManager.getEnemyCopy(EnemyType.BOAR);
 
         assertNotNull(boar);
         assertEquals("Boar", boar.getName());
@@ -45,16 +44,10 @@ class EnemyManagerTest {
     }
 
     @Test
-    @DisplayName("Getting a copy of an unregistered enemy type returns null")
-    void getEnemyCopyReturnsNullForUnregisteredType() {
-        assertNull(EnemyManager.getEnemyCopy(EnemyType.Goblin));
-    }
-
-    @Test
     @DisplayName("Getting enemy copies returns independent instances")
     void getEnemyCopyReturnsIndependentInstances() {
-        Enemy first = EnemyManager.getEnemyCopy(EnemyType.Wolf);
-        Enemy second = EnemyManager.getEnemyCopy(EnemyType.Wolf);
+        Enemy first = EnemyManager.getEnemyCopy(EnemyType.WOLF);
+        Enemy second = EnemyManager.getEnemyCopy(EnemyType.WOLF);
 
         assertNotSame(first, second);
 

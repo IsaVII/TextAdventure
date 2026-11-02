@@ -83,6 +83,7 @@ public class EnvironmentHandler {
             if (worldObject.getCommand().equalsIgnoreCase(command)) {
                 String result = worldObject.interact(MainCharacter.getInstance().getInventory());
                 IO.println(UiHelpers.color(result, UiHelpers.GREEN));
+                UserInputHelpers.waitForContinue();
                 return;
             }
         }
